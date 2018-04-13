@@ -50,10 +50,3 @@ branch-api:latest
 zentimestamp:latest
 token-macro:latest
 jackson2-api:latest
-apache-httpcomponents-client-4-api:latest
-display-url-api:latest
-pipeline-graph-analysis:latest
-jsch:latest
-pipeline-model-definition:latest
-pipeline-milestone-step:latest
-matrix-project:latest

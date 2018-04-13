@@ -1,11 +1,14 @@
 #FROM jenkins:1.642.1
 FROM jenkins/jenkins:lts
 
+
 MAINTAINER Goran
+
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 USER root
+
 
 # Used to set the docker group ID
 # Set to 497 by default, which is the group ID used by AWS Linux ECS Instance
@@ -34,22 +37,24 @@ RUN apt-get update -y && \
 # Add Docker’s official GPG key
 RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
 
+# Use the following command to set up the stable repository. 
+# You always need the stable repository, even if you want to install builds 
+# from the edge or test repositories as well. 
 RUN add-apt-repository \
-	"deb [arch=amd64] https://download.docker.com/linux/debian stretch stable" && \
+	"deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+	$(lsb_release -cs) \
+	stable" && \
 	apt-get update -y && \
 	apt-get purge lxc-docker* -y && \
-	apt-get install docker-ce -y && \
+	apt-get install docker-engine=${DOCKER_ENGINE:-1.10.2}-0~xenial -y && \
 	usermod -aG docker jenkins && \
 	usermod -aG users jenkins
-# 	apt-get install docker-engine=${DOCKER_ENGINE:-1.10.2}-0~debian-stretch -y && \
+
 
 
 # Install Docker Compose
-RUN pip install docker-compose && \
+RUN pip install docker-compose==${DOCKER_COMPOSE:-1.6.2} && \
     pip install ansible boto boto3
-
-# RUN pip install docker-compose==${DOCKER_COMPOSE:-1.6.2} && \
-
 
 # Change to jenkins user
 USER jenkins
