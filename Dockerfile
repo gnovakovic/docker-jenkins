@@ -17,8 +17,8 @@ RUN groupadd -g ${DOCKER_GID:-497} docker
 
 # Used to control Docker and Docker Compose versions installed
 # NOTE: As of February 2016, AWS Linux ECS only supports Docker 1.9.1
-ARG DOCKER_ENGINE=1.10.2
-ARG DOCKER_COMPOSE=1.6.2
+# ARG DOCKER_ENGINE=1.10.2
+# ARG DOCKER_COMPOSE=1.6.2
 
 # Install base packages
 RUN apt-get update -y && \
